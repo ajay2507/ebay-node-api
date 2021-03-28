@@ -1,4 +1,5 @@
 # Ebay API Node.js
+### They are still in development, they are not ready for use.
 
 Ebay API Client for node js.
 
