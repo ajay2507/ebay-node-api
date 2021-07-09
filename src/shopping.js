@@ -66,11 +66,21 @@ const getMultipleItems = function (options) {
   * @param {String} itemId (required)
   */
 const getSingleItem = function (itemId) {
-    if (!itemId) throw new Error('invalid_request_error -> Item ID is null or invalid');
-    const requestUrl = `${urlObject.buildShoppingUrl(this.options, 'GetSingleItem')}&${stringifyUrl({ 'ItemID': itemId })} `;
-    return getRequest(requestUrl).then((data) => {
-        return JSON.parse(data);
-    }, console.error // eslint-disable-line no-console
+    if (!input || (typeof input !== 'object' && typeof input !== 'string'))
+        throw new Error('invalid_request_error -> Invalid input');
+    // To preserve backwards compatibility
+    if (typeof input === 'string') {
+        input = { ItemID: input };
+    }
+    const requestUrl = `${urlObject.buildShoppingUrl(
+        this.options,
+        'GetSingleItem'
+    )}&${stringifyUrl(input)} `;
+    return getRequest(requestUrl).then(
+        (data) => {
+            return JSON.parse(data);
+        },
+        console.error // eslint-disable-line no-console
     );
 };
 
